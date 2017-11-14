@@ -118,6 +118,7 @@ void rotateCube(char (*c)[][3][3], int color, int orientation) {
                     (*c)[2][i][0] = temp2[i];
                     //ARRAY TO YELLOW
                     (*c)[5][i][0] = temp3[i];
+                    
                     //ARRAY TO GREEN
                     (*c)[4][i][2] = temp4[i];
                 }
