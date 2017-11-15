@@ -14,8 +14,9 @@ void printCube(char cube[6][3][3]);
 void rotateCube(char (*c)[][3][3], int color, int orientation);
 
 int main(int argc, char **argv) {
-    if(argc != 2) {
-        printf("Insufficient number of arguments\n");
+    if(argc != 4) {
+        // printf("Insufficient number of arguments\n");
+        printf("To use: ./a.out <input file> <number for rotation> <clockwise(1) or counter (0)>\n");
         return 0;
     }
 
@@ -38,7 +39,7 @@ int main(int argc, char **argv) {
 
     printCube(cube);
 
-    rotateCube(&cube, 1, 1);
+    rotateCube(&cube, atoi(argv[1]), 1);
 
     printCube(cube);
 
@@ -52,7 +53,7 @@ void rotateCube(char (*c)[][3][3], int color, int orientation) {
     int temp4[3];
     int temp5[3];
     int i,j;
-    
+
     for(i=0;i<3;i++) {
         for(j=0;j<3;j++)
             temp[i][j] = (*c)[color][i][j];
@@ -158,13 +159,13 @@ void rotateCube(char (*c)[][3][3], int color, int orientation) {
                 }
                 for(int i = 0; i < 3; i++) {
                     //ARRAY TO WHITE
-                    (*c)[0][i][2] = temp3[i];
+                    (*c)[0][i][2] = temp4[i];
                     //ARRAY TO BLUE
-                    (*c)[2][i][2] = temp4[i];
+                    (*c)[2][i][2] = temp5[i];
                     //ARRAY TO YELLOW
-                    (*c)[5][i][2] = temp5[i];
+                    (*c)[5][i][2] = temp2[i];
                     //ARRAY TO GREEN
-                    (*c)[4][i][0] = temp2[i];
+                    (*c)[4][i][0] = temp3[i];
                 }
                 break;
             case 4 :    //IF GREEN == FACE
