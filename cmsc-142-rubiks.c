@@ -66,6 +66,10 @@ void rotateCube(char (*c)[][3][3], int color, int orientation) {
     //     printf("\n");
     // }
     // printf("\n\n");
+    if(orientation > 1) {
+        printf("Invalid orientation value!\n");
+        exit(0);
+    }
 
     if(orientation) { //CLOCKWISE
         //switch elements inside the 3x3 matrix first
@@ -211,6 +215,9 @@ void rotateCube(char (*c)[][3][3], int color, int orientation) {
                     (*c)[4][2][i] = temp4[i];
                 }
                 break;
+            default:
+                printf("Invalid color value!\n");
+                exit(0);
         }
     } else {
         // counter-clockwise
@@ -356,6 +363,9 @@ void rotateCube(char (*c)[][3][3], int color, int orientation) {
                     (*c)[4][2][i] = temp5[i];
                 }
                 break;
+            default:
+                printf("Invalid color value!\n");
+                exit(0);
         }
     }
 }
