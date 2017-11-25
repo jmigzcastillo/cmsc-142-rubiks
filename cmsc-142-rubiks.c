@@ -51,7 +51,6 @@ int main(int argc, char **argv) {
     //printf("is solved: %d\n", isCubeSolved(&cube));
     if(isCubeSolved(&cube)){
         printCube(cube);
-        
     }
 
     return 0;
@@ -79,11 +78,11 @@ int isCubeSolved(char (*c)[][3][3]) {
 }
 
 void solve(char (*c)[][3][3]) {
-    int N = 10;
+    int N = 7;
     int start, move;
     int nopts[N+2]; //array top of stacks
     int option[N+2][N+2]; //array stacks of options
-    int i, checkpoint;
+    int i, checkpoint,j;
     int candidate[12] = {00, 01, 10, 11, 20, 21, 30, 31, 40, 41, 50, 51};
     int solved = 0;
     int end;
@@ -92,140 +91,224 @@ void solve(char (*c)[][3][3]) {
     nopts[start]= 1;
     checkpoint = 1;
 
-    while (!solved){
-        while (nopts[start] >0){
-            if(nopts[move]>0){
-                move++;
-                nopts[move]=0; //initialize new move
+    while (nopts[start] > 0){
+        if(nopts[move]>0){
+            move++;
+            nopts[move]=0; //initialize new move
 
-                //print - solution found!
-                if(move==N+1){
-                    for(i=checkpoint;i<move;i++){
-                        if (isCubeSolved(c)){
-                            solved = 1;
-                            end = i;
-                            break;
+            //print - solution found!
+            if(move==N+1){
+                for(i=checkpoint;i<move;i++){
+                    if (isCubeSolved(c)){
+                        solved = 1;
+                        end = i;
+                        printf("solution %d:\n", i);
+                        for(j=1; j<=end; j++){
+                            switch(option[j][nopts[j]]) {
+                                case 0: //white counter-clockwise
+                                    printf("move %d: rotate_cube(cube, WHITE, !CLOCKWISE);\n", j);
+                                    break;
+                                case 1: //white clockwise
+                                    printf("move %d: rotate_cube(cube, WHITE, CLOCKWISE);\n", j);
+                                    break;
+                                case 10: //red counter-clockwise
+                                    printf("move %d: rotate_cube(cube, RED, !CLOCKWISE);\n", j);
+                                    break;
+                                case 11: //red clockwise
+                                    printf("move %d: rotate_cube(cube, RED, CLOCKWISE);\n", j);
+                                    break;
+                                case 20: //blue counter-clockwise
+                                    printf("move %d: rotate_cube(cube, BLUE, !CLOCKWISE);\n", j);
+                                    break;
+                                case 21: //blue clockwise
+                                    printf("move %d: rotate_cube(cube, BLUE, CLOCKWISE);\n", j);
+                                    break;
+                                case 30: //orange counter-clockwise
+                                    printf("move %d: rotate_cube(cube, ORANGE, !CLOCKWISE);\n", j);
+                                    break;
+                                case 31: //orange clockwise
+                                    printf("move %d: rotate_cube(cube, ORANGE, CLOCKWISE);\n", j);
+                                    break;
+                                case 40: //green counter-clockwise
+                                    printf("move %d: rotate_cube(cube, GREEN, !CLOCKWISE);\n", j);
+                                    break;
+                                case 41: //greem clockwise
+                                    printf("move %d: rotate_cube(cube, GREEN, CLOCKWISE);\n", j);
+                                    break;
+                                case 50: //yellow counter-clockwise
+                                    printf("move %d: rotate_cube(cube, YELLOW, !CLOCKWISE);\n", j);
+                                    break;
+                                case 51: //yellow clockwise
+                                    printf("move %d: rotate_cube(cube, WHITE, CLOCKWISE);\n", j);
+                                    break;
+                            }
                         }
-                        switch(option[i][nopts[i]]) {
-                            case 0: //white counter-clockwise
-                                rotateCube(c, 0, 0);
-                                break;
-                            case 1: //white clockwise
-                                rotateCube(c, 0, 1);
-                                break;
-                            case 10: //red counter-clockwise
-                                rotateCube(c, 1, 0);
-                                break;
-                            case 11: //red clockwise
-                                rotateCube(c, 1, 1);
-                                break;
-                            case 20: //blue counter-clockwise
-                                rotateCube(c, 2, 0);
-                                break;
-                            case 21: //blue clockwise
-                                rotateCube(c, 2, 1);
-                                break;
-                            case 30: //orange counter-clockwise
-                                rotateCube(c, 3, 0);
-                                break;
-                            case 31: //orange clockwise
-                                rotateCube(c, 3, 1);
-                                break;
-                            case 40: //green counter-clockwise
-                                rotateCube(c, 4, 0);
-                                break;
-                            case 41: //greem clockwise
-                                rotateCube(c, 4, 1);
-                                break;
-                            case 50: //yellow counter-clockwise
-                                rotateCube(c, 5, 0);
-                                break;
-                            case 51: //yellow clockwise
-                                rotateCube(c, 5, 1);
-                                break;
-                        }
-                        if (isCubeSolved(c)){
-                            solved = 1;
-                            end = i;
-                            break;
-                        }
-
-                        // printf("\n\n--- rotate %d\n", option[i][nopts[i]]);
-                        // printCube(*c);
-                        if(solved){
-                            break;
-                        }
-                    }
-
-                    if(solved){
                         break;
                     }
-                }
-                //populate
-                else {
-                    for(i=11; i >=0; i--) {
-                        nopts[move]++;
-                        option[move][nopts[move]] = candidate[i];
-                    } 
-                }
-            }
-            else 
-            {
-                //backtrack
-                move--;
-                //reverse back to previous pattern
-                if(nopts[move] != 0){
-                    switch(option[move][nopts[move]]){
-                        case 00:
-                            rotateCube(c, 0, 1);
-                            break;
-                        case 01:
+                    switch(option[i][nopts[i]]) {
+                        case 0: //white counter-clockwise
                             rotateCube(c, 0, 0);
                             break;
-                        case 10:
-                            rotateCube(c, 1, 1);
+                        case 1: //white clockwise
+                            rotateCube(c, 0, 1);
                             break;
-                        case 11:
+                        case 10: //red counter-clockwise
                             rotateCube(c, 1, 0);
                             break;
-                        case 20:
-                            rotateCube(c, 2, 1);
+                        case 11: //red clockwise
+                            rotateCube(c, 1, 1);
                             break;
-                        case 21:
+                        case 20: //blue counter-clockwise
                             rotateCube(c, 2, 0);
                             break;
-                        case 30:
-                            rotateCube(c, 3, 1);
+                        case 21: //blue clockwise
+                            rotateCube(c, 2, 1);
                             break;
-                        case 31:
+                        case 30: //orange counter-clockwise
                             rotateCube(c, 3, 0);
                             break;
-                        case 40:
-                            rotateCube(c, 4, 1);
+                        case 31: //orange clockwise
+                            rotateCube(c, 3, 1);
                             break;
-                        case 41:
+                        case 40: //green counter-clockwise
                             rotateCube(c, 4, 0);
                             break;
-                        case 50:
-                            rotateCube(c, 5, 1);
+                        case 41: //greem clockwise
+                            rotateCube(c, 4, 1);
                             break;
-                        case 51:
+                        case 50: //yellow counter-clockwise
                             rotateCube(c, 5, 0);
                             break;
+                        case 51: //yellow clockwise
+                            rotateCube(c, 5, 1);
+                            break;
                     }
+                    // if (isCubeSolved(c)){
+                    //     solved = 1;
+                    //     end = i;
+                    //     printf("> solution %d:\n", i);
+                    //     for(j=1; j<=end; j++){
+                    //         switch(option[j][nopts[j]]) {
+                    //             case 0: //white counter-clockwise
+                    //                 printf("move %d: rotate_cube(cube, WHITE, !CLOCKWISE);\n", j);
+                    //                 break;
+                    //             case 1: //white clockwise
+                    //                 printf("move %d: rotate_cube(cube, WHITE, CLOCKWISE);\n", j);
+                    //                 break;
+                    //             case 10: //red counter-clockwise
+                    //                 printf("move %d: rotate_cube(cube, RED, !CLOCKWISE);\n", j);
+                    //                 break;
+                    //             case 11: //red clockwise
+                    //                 printf("move %d: rotate_cube(cube, RED, CLOCKWISE);\n", j);
+                    //                 break;
+                    //             case 20: //blue counter-clockwise
+                    //                 printf("move %d: rotate_cube(cube, BLUE, !CLOCKWISE);\n", j);
+                    //                 break;
+                    //             case 21: //blue clockwise
+                    //                 printf("move %d: rotate_cube(cube, BLUE, CLOCKWISE);\n", j);
+                    //                 break;
+                    //             case 30: //orange counter-clockwise
+                    //                 printf("move %d: rotate_cube(cube, ORANGE, !CLOCKWISE);\n", j);
+                    //                 break;
+                    //             case 31: //orange clockwise
+                    //                 printf("move %d: rotate_cube(cube, ORANGE, CLOCKWISE);\n", j);
+                    //                 break;
+                    //             case 40: //green counter-clockwise
+                    //                 printf("move %d: rotate_cube(cube, GREEN, !CLOCKWISE);\n", j);
+                    //                 break;
+                    //             case 41: //greem clockwise
+                    //                 printf("move %d: rotate_cube(cube, GREEN, CLOCKWISE);\n", j);
+                    //                 break;
+                    //             case 50: //yellow counter-clockwise
+                    //                 printf("move %d: rotate_cube(cube, YELLOW, !CLOCKWISE);\n", j);
+                    //                 break;
+                    //             case 51: //yellow clockwise
+                    //                 printf("move %d: rotate_cube(cube, WHITE, CLOCKWISE);\n", j);
+                    //                 break;
+                    //         }
+                    //     }
+                    //     break;
+                    // }
+
+                    // printf("\n\n--- rotate %d\n", option[i][nopts[i]]);
+                    // printCube(*c);
+                    // if(solved){
+                    //     break;
+                    // }
                 }
-                // printf("\n--- backtrack \n");
-                // printCube(*c);
-                nopts[move]--;
-                checkpoint = move;
+
+                // if(solved){
+                //     break;
+                // }
+            }
+            //populate
+            else {
+                for(i=11; i >=0; i--) {
+                    nopts[move]++;
+                    option[move][nopts[move]] = candidate[i];
+                } 
             }
         }
-    }
+        else 
+        {
+            //backtrack
+            move--;
+            //reverse back to previous pattern
+            if(nopts[move] != 0){
+                switch(option[move][nopts[move]]){
+                    case 00:
+                        rotateCube(c, 0, 1);
+                        break;
+                    case 01:
+                        rotateCube(c, 0, 0);
+                        break;
+                    case 10:
+                        rotateCube(c, 1, 1);
+                        break;
+                    case 11:
+                        rotateCube(c, 1, 0);
+                        break;
+                    case 20:
+                        rotateCube(c, 2, 1);
+                        break;
+                    case 21:
+                        rotateCube(c, 2, 0);
+                        break;
+                    case 30:
+                        rotateCube(c, 3, 1);
+                        break;
+                    case 31:
+                        rotateCube(c, 3, 0);
+                        break;
+                    case 40:
+                        rotateCube(c, 4, 1);
+                        break;
+                    case 41:
+                        rotateCube(c, 4, 0);
+                        break;
+                    case 50:
+                        rotateCube(c, 5, 1);
+                        break;
+                    case 51:
+                        rotateCube(c, 5, 0);
+                        break;
+                }
+            }
+            // printf("\n--- backtrack \n");
+            // printCube(*c);
+            nopts[move]--;
+            checkpoint = move;
+        }
 
-    printf("solution:\n");
-    for(i=1; i<=end; i++){
-        printf("%d\n", option[i][nopts[i]]);
     }
+    // if(nopts[start] == 0) {
+    //     printf("Cannot be solved within 10 moves\n");
+    // }else{
+    //     printf("solution:\n");
+    //     for(i=1; i<=end; i++){
+    //         printf("%d\n", option[i][nopts[i]]);
+    //     }
+    // }
 }  
 
 void rotateCube(char (*c)[][3][3], int color, int orientation) {
