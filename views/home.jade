@@ -1,0 +1,115 @@
+extends layout
+
+block content
+  .container-fluid
+    if messages.error
+      .alert.alert-danger(role='alert')
+        for error in messages.error
+          div= error.msg
+    if messages.success
+      .alert.alert-success(role='alert')
+        for success in messages.success
+          div= success.msg
+    if messages.info
+      .alert.alert-info(role='alert')
+        for info in messages.info
+          div= info.msg
+
+    .row
+      .col-sm-4
+        .panel
+          .panel-body
+            h3 Enter input.txt here
+            form.form-horizontal(method='POST')
+            .form-group
+              .col-sm-12
+                textarea.form-control(name='inputField', id='inputField', rows='15')
+            .form-group
+              .col-sm-offset-9.col-sm-4
+                button.btn.btn-success(type='submit', id='submitButton') Solve
+      .col-sm-8(id="magic")
+        .panel
+          .panel-body
+            h3 The Cube
+            div(id='content')
+              div(id='cube')
+                div.face.one
+                  div.row
+                    div.col(id='000') 000
+                    div.col(id='001') 001
+                    div.col(id='002') 002
+                  div.row
+                    div.col(id='010') 010
+                    div.col(id='011') 011
+                    div.col(id='012') 012
+                  div.row
+                    div.col(id='020') 020
+                    div.col(id='021') 021
+                    div.col(id='022') 022
+                div.face.two
+                  div.row
+                    div.col(id='100') 100
+                    div.col(id='101') 101
+                    div.col(id='102') 102
+                  div.row
+                    div.col(id='110') 110
+                    div.col(id='111') 111
+                    div.col(id='112') 112
+                  div.row
+                    div.col(id='120') 120
+                    div.col(id='121') 121
+                    div.col(id='122') 122
+                div.face.three
+                  div.row
+                    div.col(id='200') 200
+                    div.col(id='201') 201
+                    div.col(id='202') 202
+                  div.row
+                    div.col(id='210') 210
+                    div.col(id='211') 211
+                    div.col(id='212') 212
+                  div.row
+                    div.col(id='220') 220
+                    div.col(id='221') 221
+                    div.col(id='222') 222
+                div.face.four
+                  div.row
+                    div.col(id='300') 300
+                    div.col(id='301') 301
+                    div.col(id='302') 302
+                  div.row
+                    div.col(id='310') 310
+                    div.col(id='311') 311
+                    div.col(id='312') 312
+                  div.row
+                    div.col(id='320') 320
+                    div.col(id='321') 321
+                    div.col(id='322') 322
+                div.face.five
+                  div.row
+                    div.col(id='400') 400
+                    div.col(id='401') 401
+                    div.col(id='402') 402
+                  div.row
+                    div.col(id='410') 410
+                    div.col(id='411') 411
+                    div.col(id='412') 412
+                  div.row
+                    div.col(id='420') 420
+                    div.col(id='421') 421
+                    div.col(id='422') 422
+                div.face.six
+                  div.row
+                    div.col(id='500') 500
+                    div.col(id='501') 501
+                    div.col(id='502') 502
+                  div.row
+                    div.col(id='510') 510
+                    div.col(id='511') 511
+                    div.col(id='512') 512
+                  div.row
+                    div.col(id='520') 520
+                    div.col(id='521') 521
+                    div.col(id='522') 522
+            h3 Solution
+            p Lorem ipsum something something...

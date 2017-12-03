@@ -1,0 +1,91 @@
+
+#magic {
+    display: none;
+}
+
+.row {
+    height: 33.33%;
+}
+
+.col {
+    float: left;
+    width: 33.33%;
+    height: 100%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.whiteColor {
+    background: white;
+}
+
+.redColor {
+    background: red;
+}
+
+.blueColor {
+    background: blue;
+}
+
+.orangeColor {
+    background: orange;
+}
+
+.greenColor {
+    background: green;
+}
+
+.yellowColor {
+    background: yellow;
+}
+
+/* CSS code after this line came from: https://paulrhayes.com/animated-css3-cube-interface-using-3d-transforms/ */
+#content {
+  -webkit-perspective: 0px;
+}
+
+#cube {
+  position: relative;
+  margin: 0 auto;
+  height: 200px;
+  width: 200px;
+  -webkit-transition: -webkit-transform 0.5s linear;
+  -webkit-transform-style: preserve-3d;
+}
+
+.face {
+    position: absolute;
+    height: 180px;
+    width: 180px;
+    padding: 0px;
+    margin: 0px;
+    background-color: black;
+  }
+
+#cube .one  {
+    -webkit-transform: rotateX(90deg) translateZ(90px);
+}
+
+#cube .two {
+    -webkit-transform: translateZ(90px);
+}
+
+#cube .three {
+    -webkit-transform: rotateY(90deg) translateZ(90px);
+}
+
+#cube .four {
+    -webkit-transform: rotateY(180deg) translateZ(90px);
+}
+
+#cube .five {
+    -webkit-transform: rotateY(-90deg) translateZ(90px);
+}
+
+#cube .six {
+    -webkit-transform: rotateX(-90deg) translateZ(90px) rotate(180deg);
+}
