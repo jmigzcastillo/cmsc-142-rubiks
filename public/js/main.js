@@ -47,7 +47,7 @@ $(function() {
     $.ajax({
       type: "POST",
       url: "/solvecube",
-      data: data,
+      data: { data: inputCube },
       success: function(data) {
         console.log(data);
       }

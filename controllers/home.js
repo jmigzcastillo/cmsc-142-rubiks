@@ -12,6 +12,8 @@ exports.index = function(req, res) {
  */
 exports.solveCube = function(req, res) {
   // do solve here
+  console.log(req.body);
+
 
   res.send({ msg:"success" });
 }
