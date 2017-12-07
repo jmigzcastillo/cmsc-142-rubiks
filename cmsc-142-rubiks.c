@@ -80,7 +80,7 @@ int isCubeSolved(char (*c)[][3][3]) {
 }
 
 void solve(char (*c)[][3][3]) {
-    int N = 10;
+    int N = 16;
     int start, move;
     int nopts[N+2]; //array top of stacks
     int option[N+2][N+2]; //array stacks of options
@@ -88,6 +88,7 @@ void solve(char (*c)[][3][3]) {
     int candidate[12] = {0, 1, 10, 11, 20, 21, 30, 31, 40, 41, 50, 51};
     int solved = 0;
     int end, found;
+    int solnum=0, solnumlen =-1;
 
     move = start = 0; 
     nopts[start]= 1;
@@ -100,12 +101,7 @@ void solve(char (*c)[][3][3]) {
 
             //print - solution found!
             if(move==N+1){
-                // for(i=1;i<move;i++)
-                //     if(i<checkpoint){
-                //         printf("   ");
-                //     }else{
-                //         printf("%2i ",option[i][nopts[i]]);
-                //     }
+                
                 for(i=checkpoint;i<move;i++){
                     if (isCubeSolved(c)){
                         solved = 1;
@@ -149,13 +145,15 @@ void solve(char (*c)[][3][3]) {
                                     printf("move %d: rotate_cube(cube, YELLOW, !CLOCKWISE);\n", j);
                                     break;
                                 case 51: //yellow clockwise
-                                    printf("move %d: rotate_cube(cube, WHITE, CLOCKWISE);\n", j);
+                                    printf("move %d: rotate_cube(cube, YELLOW, CLOCKWISE);\n", j);
                                     break;
                             }
                         }
                     }
                     if(solved){
                         solved = 0;
+                        printCube(*c);
+                        exit(1);
                         break;
                     }
                     switch(option[i][nopts[i]]) {
@@ -198,8 +196,15 @@ void solve(char (*c)[][3][3]) {
                     }
                     if (isCubeSolved(c)){
                         solved = 1;
+                        // solnum++;
+                        // if(solnum != 1){
+                        //     end = i-1;
+                        // }else{
+                        //     end=i;
+                        // }
                         end = i;
-                        printf("> solution %d:\n", i);
+                        
+                        printf("> solution %d:\n", end);
                         for(j=1; j<=end; j++){
                             switch(option[j][nopts[j]]) {
                                 case 0: //white counter-clockwise
@@ -236,7 +241,7 @@ void solve(char (*c)[][3][3]) {
                                     printf("move %d: rotate_cube(cube, YELLOW, !CLOCKWISE);\n", j);
                                     break;
                                 case 51: //yellow clockwise
-                                    printf("move %d: rotate_cube(cube, WHITE, CLOCKWISE);\n", j);
+                                    printf("move %d: rotate_cube(cube, YELLOW, CLOCKWISE);\n", j);
                                     break;
                             }
                         }
@@ -246,6 +251,7 @@ void solve(char (*c)[][3][3]) {
                     // printCube(*c);
                     if(solved){
                         solved = 0;
+                        printCube(*c);
                         break;
                     }
                 }
@@ -264,61 +270,51 @@ void solve(char (*c)[][3][3]) {
         }
         else 
         {
-            for(i = 0; i < N; i++) {
-                if(((i+3 <= N) && (option[i][nopts[i]] == option[i+1][nopts[i+1]] && option[i][nopts[i]] == option[i+2][nopts[i+2]] && 
-                    option[i][nopts[i]] == option[i+3][nopts[i+3]])) || ((i+1 <= N) && (((option[i][nopts[i]]) % 2 == 1 &&
-                    (option[i][nopts[i]]) + 1 == option[i+1][nopts[i+1]]) || ((option[i][nopts[i]]) % 2 == 0 &&
-                    (option[i][nopts[i]]) - 1 == option[i+1][nopts[i+1]])))) {
-                        move = i+1;
-                        nopts[move] = nopts[move]-1;
+        
+            move--;
+            if(nopts[move] != 0){
+                switch(option[move][nopts[move]]){
+                    case 0:
+                        rotateCube(c, 0, 1);
                         break;
-                } else if(i == N-1) {
-                    move--;
-                    if(nopts[move] != 0){
-                        switch(option[move][nopts[move]]){
-                            case 0:
-                                rotateCube(c, 0, 1);
-                                break;
-                            case 1:
-                                rotateCube(c, 0, 0);
-                                break;
-                            case 10:
-                                rotateCube(c, 1, 1);
-                                break;
-                            case 11:
-                                rotateCube(c, 1, 0);
-                                break;
-                            case 20:
-                                rotateCube(c, 2, 1);
-                                break;
-                            case 21:
-                                rotateCube(c, 2, 0);
-                                break;
-                            case 30:
-                                rotateCube(c, 3, 1);
-                                break;
-                            case 31:
-                                rotateCube(c, 3, 0);
-                                break;
-                            case 40:
-                                rotateCube(c, 4, 1);
-                                break;
-                            case 41:
-                                rotateCube(c, 4, 0);
-                                break;
-                            case 50:
-                                rotateCube(c, 5, 1);
-                                break;
-                            case 51:
-                                rotateCube(c, 5, 0);
-                                break;
-                        }
-                    }
-                    nopts[move]--;
-                    checkpoint = move;
-                    break;
+                    case 1:
+                        rotateCube(c, 0, 0);
+                        break;
+                    case 10:
+                        rotateCube(c, 1, 1);
+                        break;
+                    case 11:
+                        rotateCube(c, 1, 0);
+                        break;
+                    case 20:
+                        rotateCube(c, 2, 1);
+                        break;
+                    case 21:
+                        rotateCube(c, 2, 0);
+                        break;
+                    case 30:
+                        rotateCube(c, 3, 1);
+                        break;
+                    case 31:
+                        rotateCube(c, 3, 0);
+                        break;
+                    case 40:
+                        rotateCube(c, 4, 1);
+                        break;
+                    case 41:
+                        rotateCube(c, 4, 0);
+                        break;
+                    case 50:
+                        rotateCube(c, 5, 1);
+                        break;
+                    case 51:
+                        rotateCube(c, 5, 0);
+                        break;
                 }
             }
+            nopts[move]--;
+            checkpoint = move;
+                
             //backtrack
             // move--;
             //reverse back to previous pattern
